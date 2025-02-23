@@ -51,7 +51,7 @@ export default function KBar({ children }: { children: React.ReactNode }) {
       // Return only valid actions (ignoring null base actions for containers)
       return baseAction ? [baseAction, ...childActions] : childActions;
     });
-  }, [navigateTo, navItems]);
+  }, [navigateTo]); // Removed navItems from the dependency array
 
   return (
     <KBarProvider actions={actions}>
@@ -59,6 +59,7 @@ export default function KBar({ children }: { children: React.ReactNode }) {
     </KBarProvider>
   );
 }
+
 const KBarComponent = ({ children }: { children: React.ReactNode }) => {
   useThemeSwitching();
 
