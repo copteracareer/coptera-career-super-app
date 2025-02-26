@@ -42,7 +42,7 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
-import { Icons } from './icons';
+import { Icons } from '../icons';
 
 export const company = {
   name: 'Coptera Indonesia',

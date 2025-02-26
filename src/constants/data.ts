@@ -131,47 +131,52 @@ export const navItems: NavItem[] = [
     items: [], // Empty array as there are no child items for Dashboard
   },
   {
-    title: 'Employee',
-    url: '/dashboard/employee',
-    icon: 'user',
-    shortcut: ['e', 'e'],
-    isActive: false,
-    items: [], // No child items
-  },
-  {
-    title: 'Product',
-    url: '/dashboard/product',
-    icon: 'product',
-    shortcut: ['p', 'p'],
-    isActive: false,
-    items: [], // No child items
-  },
-  {
-    title: 'Account',
+    title: 'Job Portal',
     url: '#', // Placeholder as there is no direct link for the parent
-    icon: 'billing',
+    icon: 'job',
     isActive: true,
 
     items: [
       {
-        title: 'Profile',
-        url: '/dashboard/profile',
+        title: 'Job',
+        url: '/admin/job',
         icon: 'userPen',
         shortcut: ['m', 'm'],
       },
       {
-        title: 'Login',
+        title: 'Company',
         shortcut: ['l', 'l'],
-        url: '/',
-        icon: 'login',
+        url: '/admin/company',
+        icon: 'company',
       },
     ],
   },
   {
-    title: 'Kanban',
-    url: '/dashboard/kanban',
-    icon: 'kanban',
+    title: 'Products',
+    url: '#',
+    icon: 'product',
     shortcut: ['k', 'k'],
+    isActive: false,
+    items: [
+      {
+        title: 'Events',
+        url: '/dashboard/events',
+        icon: 'userPen',
+        shortcut: ['m', 'm'],
+      },
+      {
+        title: 'Bootcamp',
+        shortcut: ['l', 'l'],
+        url: '/dashboard/bootcamps',
+        icon: 'company',
+      },
+    ],
+  },
+  {
+    title: 'User',
+    url: '/dashboard/user',
+    icon: 'user',
+    shortcut: ['e', 'e'],
     isActive: false,
     items: [], // No child items
   },
