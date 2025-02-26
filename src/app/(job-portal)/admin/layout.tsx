@@ -3,6 +3,7 @@ import AppSidebar from '@/components/layout/app-sidebar';
 import { cookies } from 'next/headers';
 import Header from '@/components/layout/header';
 import Providers from '@/components/layout/providers';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 export default async function AdminLayout({
   children,
@@ -12,16 +13,18 @@ export default async function AdminLayout({
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get('sidebar:state')?.value === 'true';
   return (
-    <Providers>
-      <SidebarProvider defaultOpen={defaultOpen}>
-        <AppSidebar />
-        <SidebarInset>
-          <Header />
-          {/* page main content */}
-          {children}
-          {/* page main content ends */}
-        </SidebarInset>
-      </SidebarProvider>
-    </Providers>
+    <NuqsAdapter>
+      <Providers>
+        <SidebarProvider defaultOpen={defaultOpen}>
+          <AppSidebar />
+          <SidebarInset>
+            <Header />
+            {/* page main content */}
+            {children}
+            {/* page main content ends */}
+          </SidebarInset>
+        </SidebarProvider>
+      </Providers>
+    </NuqsAdapter>
   );
 }
