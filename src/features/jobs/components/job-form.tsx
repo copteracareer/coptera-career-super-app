@@ -402,6 +402,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                       <Input
                         placeholder="Enter job link (optional)"
                         {...field}
+                        value={field.value ?? ''}
                       />
                     </FormControl>
                     <FormMessage />
