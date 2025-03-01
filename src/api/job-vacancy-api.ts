@@ -27,3 +27,42 @@ export async function getJobVacancyById(id: number): Promise<JobVacancy> {
   }
   return vacancy;
 }
+
+export async function createJobVacancy(
+  payload: unknown,
+): Promise<JobVacancyResponse> {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to create job vacancy');
+  }
+  return await res.json();
+}
+
+export async function updateJobVacancy(
+  id: number,
+  payload: unknown,
+): Promise<JobVacancyResponse> {
+  const res = await fetch(`${API_URL}/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to update job vacancy');
+  }
+  return await res.json();
+}
+
+export async function deleteJobVacancy(id: number): Promise<unknown> {
+  const res = await fetch(`${API_URL}/${id}`, {
+    method: 'DELETE',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to delete job vacancy');
+  }
+  return await res.json();
+}

@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import Header from '@/components/layout/header';
 import Providers from '@/components/layout/providers';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { Toaster } from 'sonner';
 
 export default async function AdminLayout({
   children,
@@ -21,6 +22,7 @@ export default async function AdminLayout({
             <Header />
             {/* page main content */}
             {children}
+            <Toaster />
             {/* page main content ends */}
           </SidebarInset>
         </SidebarProvider>

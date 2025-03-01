@@ -1,4 +1,5 @@
 'use client';
+
 import { AlertModal } from '@/components/modal/alert-modal';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,18 +13,31 @@ import type { JobVacancy } from '@/types/job-vacancy';
 import { Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { deleteJobVacancy } from '@/api/job-vacancy-api';
+import { toast } from 'sonner';
 
 interface CellActionProps {
   data: JobVacancy;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const onConfirm = async () => {
-    // Implementasikan logika penghapusan job vacancy sesuai kebutuhan
+    try {
+      setLoading(true);
+      await deleteJobVacancy(data.id);
+      toast.success('Job vacancy deleted successfully!');
+      setOpen(false);
+      router.refresh();
+    } catch (error) {
+      console.error('Error deleting job vacancy', error);
+      toast.error('Failed to delete job vacancy.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,7 +57,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
           <DropdownMenuItem
             onClick={() => router.push(`/dashboard/job-vacancy/${data.id}`)}
           >
