@@ -1,34 +1,19 @@
-import { Product } from '@/constants/data';
-import { fakeProducts } from '@/constants/mock-api';
-import { searchParamsCache } from '@/lib/searchparams';
-import { DataTable as ProductTable } from '@/components/ui/table/data-table';
+import { DataTable as JobVacancyTable } from '@/components/ui/table/data-table';
 import { columns } from './tables/columns';
+import { getJobVacancies } from '@/api/job-vacancy-api';
+import type { JobVacancy } from '@/types/job-vacancy';
 
 type JobListingPage = object;
 
 export default async function JobListingPage({}: JobListingPage) {
-  // Showcasing the use of search params cache in nested RSCs
-  const page = searchParamsCache.get('page');
-  const search = searchParamsCache.get('q');
-  const pageLimit = searchParamsCache.get('limit');
-  const categories = searchParamsCache.get('categories');
-
-  const filters = {
-    page,
-    limit: pageLimit,
-    ...(search && { search }),
-    ...(categories && { categories: categories }),
-  };
-
-  const data = await fakeProducts.getProducts(filters);
-  const totalProducts = data.total_products;
-  const products: Product[] = data.products;
+  const vacancies: JobVacancy[] = await getJobVacancies();
+  const totalVacancies = vacancies.length;
 
   return (
-    <ProductTable
+    <JobVacancyTable
       columns={columns}
-      data={products}
-      totalItems={totalProducts}
+      data={vacancies}
+      totalItems={totalVacancies}
     />
   );
 }

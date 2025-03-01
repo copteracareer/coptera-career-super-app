@@ -1,7 +1,9 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: ['api.slingacademy.com', 'cooperative-pewter-paw.glitch.me'],
+  },
 };
 
 export default nextConfig;
