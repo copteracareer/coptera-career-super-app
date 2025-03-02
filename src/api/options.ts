@@ -36,3 +36,7 @@ export function getCompanies() {
 export function getJobFacilities() {
   return getOptions('job-facility');
 }
+
+export function getCompanyTypes() {
+  return getOptions('company-type');
+}

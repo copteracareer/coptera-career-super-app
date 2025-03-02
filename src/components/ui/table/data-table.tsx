@@ -44,7 +44,7 @@ export function DataTable<TData, TValue>({
   totalItems,
   pageSizeOptions = [10, 20, 30, 40, 50],
 }: DataTableProps<TData, TValue>) {
-  console.log('DATA JOB', data);
+  console.log('DATA', data);
   const [currentPage, setCurrentPage] = useQueryState(
     'page',
     parseAsInteger.withOptions({ shallow: false }).withDefault(1),
