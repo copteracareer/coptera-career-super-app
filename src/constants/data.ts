@@ -122,14 +122,14 @@ export type Product = {
 };
 
 export const navItems: NavItem[] = [
-  {
-    title: 'Dashboard',
-    url: '/dashboard/overview',
-    icon: 'dashboard',
-    isActive: false,
-    shortcut: ['d', 'd'],
-    items: [], // Empty array as there are no child items for Dashboard
-  },
+  // {
+  //   title: 'Dashboard',
+  //   url: '/dashboard/overview',
+  //   icon: 'dashboard',
+  //   isActive: false,
+  //   shortcut: ['d', 'd'],
+  //   items: [], // Empty array as there are no child items for Dashboard
+  // },
   {
     title: 'Job Portal',
     url: '#', // Placeholder as there is no direct link for the parent
@@ -151,33 +151,33 @@ export const navItems: NavItem[] = [
       },
     ],
   },
-  {
-    title: 'Products',
-    url: '#',
-    icon: 'product',
-    shortcut: ['k', 'k'],
-    isActive: false,
-    items: [
-      {
-        title: 'Events',
-        url: '/dashboard/events',
-        icon: 'userPen',
-        shortcut: ['m', 'm'],
-      },
-      {
-        title: 'Bootcamp',
-        shortcut: ['l', 'l'],
-        url: '/dashboard/bootcamps',
-        icon: 'company',
-      },
-    ],
-  },
-  {
-    title: 'User',
-    url: '/dashboard/user',
-    icon: 'user',
-    shortcut: ['e', 'e'],
-    isActive: false,
-    items: [], // No child items
-  },
+  // {
+  //   title: 'Products',
+  //   url: '#',
+  //   icon: 'product',
+  //   shortcut: ['k', 'k'],
+  //   isActive: false,
+  //   items: [
+  //     {
+  //       title: 'Events',
+  //       url: '/dashboard/events',
+  //       icon: 'userPen',
+  //       shortcut: ['m', 'm'],
+  //     },
+  //     {
+  //       title: 'Bootcamp',
+  //       shortcut: ['l', 'l'],
+  //       url: '/dashboard/bootcamps',
+  //       icon: 'company',
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: 'User',
+  //   url: '/dashboard/user',
+  //   icon: 'user',
+  //   shortcut: ['e', 'e'],
+  //   isActive: false,
+  //   items: [], // No child items
+  // },
 ];

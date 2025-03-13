@@ -24,3 +24,11 @@ export function formatBytes(
       : (sizes[i] ?? 'Bytes')
   }`;
 }
+
+export const formatCurrency = (value: string | number | undefined): string => {
+  if (value === undefined || value === null) return '';
+
+  const numericValue = String(value).replace(/\D/g, '');
+
+  return new Intl.NumberFormat('id-ID').format(Number(numericValue));
+};

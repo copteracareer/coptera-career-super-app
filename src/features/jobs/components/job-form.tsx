@@ -34,6 +34,7 @@ import {
 import { createJobVacancy, updateJobVacancy } from '@/api/job-vacancy-api';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { formatCurrency } from '@/lib/utils';
 
 // Schema validasi menggunakan zod
 const jobFormSchema = z.object({
@@ -87,7 +88,6 @@ type JobFormProps = {
 export default function JobForm({ initialData, pageTitle }: JobFormProps) {
   const defaultValues: JobVacancyFormValues = {
     company_id: initialData?.company_id || 0,
-    // Set city_id menjadi null secara default
     city_id: null,
     job_experience_id: initialData?.job_experience_id || 0,
     job_classification_id: initialData?.job_classification_id || 0,
@@ -99,7 +99,6 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
     description: initialData?.description || '',
     link: initialData?.link || '',
     facilities: initialData?.facilities || [],
-    // Set country_id menjadi 1 secara default
     country_id: 1,
     minimum: initialData?.minimum || 0,
     maximum: initialData?.maximum || 0,
@@ -193,7 +192,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                     <FormLabel>Company</FormLabel>
                     <Select
                       onValueChange={(value) => field.onChange(Number(value))}
-                      value={String(field.value)}
+                      value={field.value === 0 ? '' : String(field.value)}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -275,7 +274,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                     <FormLabel>Job Experience</FormLabel>
                     <Select
                       onValueChange={(value) => field.onChange(Number(value))}
-                      value={String(field.value)}
+                      value={field.value === 0 ? '' : String(field.value)}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -302,7 +301,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                     <FormLabel>Job Classification</FormLabel>
                     <Select
                       onValueChange={(value) => field.onChange(Number(value))}
-                      value={String(field.value)}
+                      value={field.value === 0 ? '' : String(field.value)}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -329,7 +328,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                     <FormLabel>Job Type</FormLabel>
                     <Select
                       onValueChange={(value) => field.onChange(Number(value))}
-                      value={String(field.value)}
+                      value={field.value === 0 ? '' : String(field.value)}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -356,7 +355,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                     <FormLabel>Education Level</FormLabel>
                     <Select
                       onValueChange={(value) => field.onChange(Number(value))}
-                      value={String(field.value)}
+                      value={field.value === 0 ? '' : String(field.value)}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -426,9 +425,16 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                         </span>
                         <FormControl>
                           <Input
-                            type="number"
                             placeholder="Minimum"
                             {...field}
+                            value={formatCurrency(field.value)}
+                            onChange={(e) => {
+                              const rawValue = e.target.value.replace(
+                                /\D/g,
+                                '',
+                              );
+                              field.onChange(rawValue);
+                            }}
                             className="rounded-l-none"
                           />
                         </FormControl>
@@ -449,9 +455,16 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                         </span>
                         <FormControl>
                           <Input
-                            type="number"
                             placeholder="Maximum"
                             {...field}
+                            value={formatCurrency(field.value)}
+                            onChange={(e) => {
+                              const rawValue = e.target.value.replace(
+                                /\D/g,
+                                '',
+                              );
+                              field.onChange(rawValue);
+                            }}
                             className="rounded-l-none"
                           />
                         </FormControl>
@@ -461,7 +474,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                   )}
                 />
               </div>
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="frequency"
                 render={({ field }) => (
@@ -481,7 +494,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
 
             <Button type="submit">Submit</Button>
