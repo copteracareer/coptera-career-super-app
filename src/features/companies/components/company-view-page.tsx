@@ -32,6 +32,7 @@ export default async function CompanyViewPage({
   let initialData: CompanyFormValues | null = null;
   let pageTitle = 'Create New Company';
 
+  console.log('COMPANY ID', companyId);
   if (companyId !== 'new') {
     try {
       const company: Company = await getCompanyById(Number(companyId));
@@ -40,6 +41,7 @@ export default async function CompanyViewPage({
       }
       initialData = mapCompanyToFormValues(company);
       pageTitle = 'Edit Company';
+      console.log('initialData', initialData, pageTitle);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       notFound();

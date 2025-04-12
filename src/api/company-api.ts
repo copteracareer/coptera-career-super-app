@@ -1,6 +1,7 @@
 import type { CompanyResponse, Company } from '../types/company';
 
-const API_URL = 'https://cooperative-pewter-paw.glitch.me/api/company';
+const API_URL = 'https://api.career.coptera.id/api/company';
+const API_URL_v2 = 'https://api.career.coptera.id/api/company/v2';
 
 export async function getCompanies(): Promise<Company[]> {
   const res = await fetch(API_URL);
@@ -44,7 +45,6 @@ export async function createCompany(
   let body: BodyInit;
   const headers: Record<string, string> = {};
 
-  console.log(payload);
   if (payload instanceof FormData) {
     body = payload;
   } else {
@@ -52,7 +52,7 @@ export async function createCompany(
     headers['Content-Type'] = 'application/json';
   }
 
-  const res = await fetch(API_URL, {
+  const res = await fetch(API_URL_v2, {
     method: 'POST',
     headers,
     body,

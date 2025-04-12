@@ -3,7 +3,11 @@ import path from 'path';
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['api.slingacademy.com', 'cooperative-pewter-paw.glitch.me'],
+    domains: [
+      'api.slingacademy.com',
+      'cooperative-pewter-paw.glitch.me',
+      'api.career.coptera.id/',
+    ],
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {

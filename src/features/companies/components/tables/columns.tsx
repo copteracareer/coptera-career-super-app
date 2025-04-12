@@ -10,7 +10,7 @@ export const companyColumns: ColumnDef<Company>[] = [
     id: 'logo',
     header: 'Logo',
     cell: ({ row }) => {
-      const baseUrl = 'https://cooperative-pewter-paw.glitch.me';
+      const baseUrl = 'https://api.career.coptera.id';
       const relativePath = row.original.image;
       const imageUrl = relativePath ? `${baseUrl}/${relativePath}` : null;
       return (

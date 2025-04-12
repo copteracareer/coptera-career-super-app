@@ -1,6 +1,6 @@
 import type { JobVacancyResponse, JobVacancy } from '../types/job-vacancy';
 
-const API_URL = 'https://cooperative-pewter-paw.glitch.me/api/job-vacancy';
+const API_URL = 'https://api.career.coptera.id/api/job-vacancy';
 
 export async function getJobVacancies(): Promise<JobVacancy[]> {
   const res = await fetch(API_URL);

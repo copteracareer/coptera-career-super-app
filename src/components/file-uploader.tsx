@@ -108,7 +108,7 @@ export function FileUploader(props: FileUploaderProps) {
   } = props;
 
   const [files, setFiles] = useControllableState({
-    prop: valueProp,
+    prop: Array.isArray(valueProp) ? valueProp : [],
     onChange: onValueChange,
   });
 
@@ -247,14 +247,15 @@ export function FileUploader(props: FileUploaderProps) {
       {files?.length ? (
         <ScrollArea className="h-fit w-full px-3">
           <div className="max-h-48 space-y-4">
-            {files?.map((file, index) => (
-              <FileCard
-                key={index}
-                file={file}
-                onRemove={() => onRemove(index)}
-                progress={progresses?.[file.name]}
-              />
-            ))}
+            {Array.isArray(files) &&
+              files.map((file, index) => (
+                <FileCard
+                  key={index}
+                  file={file}
+                  onRemove={() => onRemove(index)}
+                  progress={progresses?.[file.name]}
+                />
+              ))}
           </div>
         </ScrollArea>
       ) : null}

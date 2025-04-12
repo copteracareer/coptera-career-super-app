@@ -35,6 +35,7 @@ import { createJobVacancy, updateJobVacancy } from '@/api/job-vacancy-api';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { formatCurrency } from '@/lib/utils';
+import ComboBox from '@/components/ui/combobox';
 
 // Schema validasi menggunakan zod
 const jobFormSchema = z.object({
@@ -217,27 +218,13 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Facilities</FormLabel>
-                    <Select
-                      onValueChange={(value) => field.onChange([Number(value)])}
-                      value={
-                        field.value && field.value.length > 0
-                          ? String(field.value[0])
-                          : ''
-                      }
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Facility" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {jobFacilities.map((fac) => (
-                          <SelectItem key={fac.id} value={String(fac.id)}>
-                            {fac.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <ComboBox
+                        type="facilities"
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -299,23 +286,11 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Job Classification</FormLabel>
-                    <Select
-                      onValueChange={(value) => field.onChange(Number(value))}
-                      value={field.value === 0 ? '' : String(field.value)}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Classification" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {classifications.map((cl) => (
-                          <SelectItem key={cl.id} value={String(cl.id)}>
-                            {cl.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <ComboBox
+                      type="classifications"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}
@@ -353,23 +328,11 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Education Level</FormLabel>
-                    <Select
-                      onValueChange={(value) => field.onChange(Number(value))}
-                      value={field.value === 0 ? '' : String(field.value)}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Education Level" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {educationLevels.map((el) => (
-                          <SelectItem key={el.id} value={String(el.id)}>
-                            {el.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <ComboBox
+                      type="education-levels"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}

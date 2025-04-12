@@ -57,7 +57,7 @@ export function Toolbar({ editor }: ToolbarProps) {
       >
         <Strikethrough size={16} />
       </Button>
-      <Button
+      {/* <Button
         type="button"
         variant={
           editor.isActive('heading', { level: 1 }) ? 'default' : 'outline'
@@ -95,7 +95,7 @@ export function Toolbar({ editor }: ToolbarProps) {
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
       >
         <Quote size={16} />
-      </Button>
+      </Button> */}
       <Button
         type="button"
         onClick={() => editor.chain().focus().setTextAlign('left').run()}

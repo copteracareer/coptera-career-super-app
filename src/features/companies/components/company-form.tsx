@@ -15,26 +15,15 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import RichTextEditor from '@/components/ui/rich-text-editor';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { FileUploader } from '@/components/file-uploader';
 import { createCompany, updateCompany } from '@/api/company-api';
-import { useQuery } from '@tanstack/react-query';
-import { getCompanyTypes } from '@/api/options';
+import ComboBox from '@/components/ui/combobox';
 
 // Schema validasi untuk company
 const companyFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  telephone: z.string().min(5, 'Telephone is required'),
   image: z.any(), // gunakan file uploader atau biarkan kosong untuk update
   company_type_id: z.coerce
     .number({ invalid_type_error: 'Company type is required' })
@@ -62,10 +51,14 @@ export default function CompanyForm({
 }: CompanyFormProps) {
   const defaultValues: CompanyFormValues = {
     name: initialData?.name || '',
-    email: initialData?.email || '',
-    password: '',
-    telephone: initialData?.telephone || '',
-    image: initialData?.image || null,
+    image: initialData?.image
+      ? [
+          {
+            name: initialData.image,
+            preview: `https://api.career.coptera.id/${initialData.image}`,
+          },
+        ]
+      : [],
     company_type_id: initialData?.company_type_id || 0,
     city_id: 1,
     brand: initialData?.brand || '',
@@ -81,25 +74,17 @@ export default function CompanyForm({
     defaultValues,
   });
 
-  // Ambil opsi Company Types dari API
-  const { data: companyTypes = [] } = useQuery({
-    queryKey: ['companyTypes'],
-    queryFn: getCompanyTypes,
-  });
-
   const router = useRouter();
 
   async function onSubmit(values: CompanyFormValues) {
     try {
+      console.log('TEST', values);
       // Pastikan city_id selalu null
       values.city_id = null;
 
       // Siapkan FormData untuk mendukung upload file
       const formData = new FormData();
       formData.append('name', values.name);
-      formData.append('email', values.email);
-      formData.append('password', values.password);
-      formData.append('telephone', values.telephone);
       if (values.image.length > 0) {
         formData.append('image', values.image[0]);
       }
@@ -112,14 +97,16 @@ export default function CompanyForm({
       formData.append('city_id', `${1}`);
 
       let response;
-      if (values.id) {
-        response = await updateCompany(values.id, formData);
+      if (initialData?.id) {
+        console.log('update', formData);
+        response = await updateCompany(initialData.id, formData);
       } else {
+        console.log('add');
         response = await createCompany(formData);
       }
       console.log('Response:', response);
       toast.success('Company saved successfully!');
-      router.push('/admin/company');
+      // router.push('/admin/company');
     } catch (error) {
       console.error('Error submitting form', error);
       toast.error('Error submitting company. Please try again.');
@@ -153,53 +140,6 @@ export default function CompanyForm({
               />
             </div>
 
-            {/* Group 2: Email, Password, Telephone */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Enter password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="telephone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Telephone</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter telephone" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
             {/* Group 3: Company Type */}
             <div>
               <FormField
@@ -209,21 +149,11 @@ export default function CompanyForm({
                   <FormItem>
                     <FormLabel>Company Type</FormLabel>
                     <FormControl>
-                      <Select
-                        onValueChange={(value) => field.onChange(Number(value))}
-                        value={String(field.value)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Company Type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {companyTypes.map((ct) => (
-                            <SelectItem key={ct.id} value={String(ct.id)}>
-                              {ct.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <ComboBox
+                        type="company-type"
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
