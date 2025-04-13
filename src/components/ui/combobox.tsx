@@ -21,10 +21,11 @@ type Option = { label: string; value: string | number };
 
 type ComboBoxProps = {
   type: keyof typeof apiConfig; // "company", dll.
-  value?: string | number;
-  onChange: (value: string | number) => void;
+  value?: string | number | (string | number)[];
+  onChange: (value: string | number | (string | number)[]) => void;
   placeholder?: string;
   disabled?: boolean;
+  multiple?: boolean;
 };
 
 export default function ComboBox({
@@ -33,6 +34,7 @@ export default function ComboBox({
   onChange,
   placeholder = 'Select...',
   disabled,
+  multiple = false,
 }: ComboBoxProps) {
   const [open, setOpen] = React.useState(false);
   const [input, setInput] = React.useState('');
@@ -51,11 +53,11 @@ export default function ComboBox({
           })),
         );
       } catch (error) {
-        console.error(`Error fetching ${type}:`, error);
+        console.error(`Error fetching ${multiple} ${type}:`, error);
       }
     }
     fetchData();
-  }, [type]);
+  }, [type, multiple]);
 
   const selectedOption = options.find((opt) => opt.value === value);
   const filteredOptions = options.filter((opt) =>

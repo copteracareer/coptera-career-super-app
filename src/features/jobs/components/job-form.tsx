@@ -204,6 +204,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                         type="facilities"
                         value={field.value}
                         onChange={field.onChange}
+                        multiple={true}
                       />
                     </FormControl>
                     <FormMessage />
