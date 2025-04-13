@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import RichTextEditor from '@/components/ui/rich-text-editor';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { FileUploader } from '@/components/file-uploader';
 import { createCompany, updateCompany } from '@/api/company-api';
@@ -73,8 +72,6 @@ export default function CompanyForm({
     resolver: zodResolver(companyFormSchema),
     defaultValues,
   });
-
-  const router = useRouter();
 
   async function onSubmit(values: CompanyFormValues) {
     try {

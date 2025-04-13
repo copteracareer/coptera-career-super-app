@@ -45,7 +45,10 @@ export default function ComboBox({
       try {
         const data = await apiConfig[type].getAll();
         setOptions(
-          data.map((item: any) => ({ value: item.id, label: item.name })),
+          data.map((item: { id: number; name: string }) => ({
+            value: item.id,
+            label: item.name,
+          })),
         );
       } catch (error) {
         console.error(`Error fetching ${type}:`, error);
@@ -65,7 +68,7 @@ export default function ComboBox({
     setLoading(true);
 
     try {
-      await apiConfig[type].create({ name: input }); // Buat data baru
+      await apiConfig[type].create(input); // Buat data baru
 
       // Fetch ulang semua data setelah create berhasil
       const updatedOptions = await apiConfig[type].getAll();

@@ -23,14 +23,7 @@ import {
 } from '@/components/ui/select';
 import RichTextEditor from '@/components/ui/rich-text-editor';
 import { useQuery } from '@tanstack/react-query';
-import {
-  getJobExperiences,
-  getJobClassifications,
-  getJobTypes,
-  getEducationLevels,
-  getCompanies,
-  getJobFacilities,
-} from '@/api/options';
+import { getJobExperiences, getJobTypes, getCompanies } from '@/api/options';
 import { createJobVacancy, updateJobVacancy } from '@/api/job-vacancy-api';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -117,25 +110,13 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
     queryKey: ['companies'],
     queryFn: getCompanies,
   });
-  const { data: jobFacilities = [] } = useQuery({
-    queryKey: ['jobFacilities'],
-    queryFn: getJobFacilities,
-  });
   const { data: experiences = [] } = useQuery({
     queryKey: ['jobExperiences'],
     queryFn: getJobExperiences,
   });
-  const { data: classifications = [] } = useQuery({
-    queryKey: ['jobClassifications'],
-    queryFn: getJobClassifications,
-  });
   const { data: jobTypes = [] } = useQuery({
     queryKey: ['jobTypes'],
     queryFn: getJobTypes,
-  });
-  const { data: educationLevels = [] } = useQuery({
-    queryKey: ['educationLevels'],
-    queryFn: getEducationLevels,
   });
 
   const router = useRouter();
