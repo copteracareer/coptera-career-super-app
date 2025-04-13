@@ -19,8 +19,15 @@ export async function createOption(
 ) {
   const API_BASE = 'https://api.career.coptera.id/api';
 
+  if (data.name === null || data.name === undefined) {
+    throw new Error('Name is required');
+  }
+
   const formattedData = {
-    name: typeof data.name === 'object' ? data.name.name : data.name,
+    name:
+      typeof data.name === 'object'
+        ? (data.name as { name: string }).name
+        : (data.name as string),
   };
 
   console.log('Data yang dikirim:', formattedData); // Debugging
