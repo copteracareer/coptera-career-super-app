@@ -12,9 +12,6 @@ function mapCompanyToFormValues(company: Company): CompanyFormValues {
   return {
     id: company.id,
     name: company.name,
-    email: company.user.email,
-    password: '',
-    telephone: company.user.telephone,
     image: company.image,
     company_type_id: company.companyType.id,
     city_id: company.city ? company.city.id : null,
