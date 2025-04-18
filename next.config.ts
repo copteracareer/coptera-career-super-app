@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
     domains: [
       'api.slingacademy.com',
       'cooperative-pewter-paw.glitch.me',
-      'api.career.coptera.id/',
+      'api.career.coptera.id',
     ],
   },
   webpack: (config, { isServer }) => {

@@ -35,7 +35,6 @@ const jobFormSchema = z.object({
   company_id: z.coerce
     .number({ invalid_type_error: 'Company is required' })
     .min(1, 'Company is required'),
-  // Hapus city_id dari form input, sehingga tidak ditampilkan
   city_id: z.coerce.number().nullable().optional(),
   job_experience_id: z.coerce
     .number({ invalid_type_error: 'Job experience is required' })
@@ -54,9 +53,9 @@ const jobFormSchema = z.object({
   due_date: z.string().min(10, 'Due date is required'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   link: z.string().nullable().optional(),
-  facilities: z
-    .array(z.coerce.number())
-    .min(1, 'At least one facility is required'),
+  facilities: z.coerce
+    .number({ invalid_type_error: 'Country is required' })
+    .min(1, 'Country is required'),
   country_id: z.coerce
     .number({ invalid_type_error: 'Country is required' })
     .min(1, 'Country is required'),
@@ -92,7 +91,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
     due_date: initialData?.due_date || '',
     description: initialData?.description || '',
     link: initialData?.link || '',
-    facilities: initialData?.facilities || [],
+    facilities: initialData?.facilities || 0,
     country_id: 1,
     minimum: initialData?.minimum || 0,
     maximum: initialData?.maximum || 0,
@@ -121,12 +120,21 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
 
   const router = useRouter();
   async function onSubmit(values: JobVacancyFormValues) {
+    const facilitiesArray = Array.isArray(values.facilities)
+      ? values.facilities
+      : [values.facilities];
+
+    const dataJob = {
+      ...values,
+      facilities: facilitiesArray,
+    };
+
     try {
       let response;
       if (values.id) {
-        response = await updateJobVacancy(values.id, values);
+        response = await updateJobVacancy(values.id, dataJob);
       } else {
-        response = await createJobVacancy(values);
+        response = await createJobVacancy(dataJob);
       }
       console.log('Response:', response);
       toast.success('Job saved successfully!');

@@ -79,10 +79,13 @@ export default function ComboBox({
         updatedOptions.map((item) => ({ value: item.id, label: item.name })),
       );
 
-      // Pilih item terbaru (opsional, jika ingin memilih otomatis)
       const newItem = updatedOptions.find((item) => item.name === input);
       if (newItem) {
-        onChange(newItem.id);
+        if (multiple) {
+          onChange([...(value as number[]), newItem.id]);
+        } else {
+          onChange(newItem.id);
+        }
       }
     } catch (error) {
       console.error(`Error adding ${type}:`, error);

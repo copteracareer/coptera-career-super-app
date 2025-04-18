@@ -19,11 +19,12 @@ import { toast } from 'sonner';
 import { FileUploader } from '@/components/file-uploader';
 import { createCompany, updateCompany } from '@/api/company-api';
 import ComboBox from '@/components/ui/combobox';
+import { useRouter } from 'next/navigation';
 
 // Schema validasi untuk company
 const companyFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
-  image: z.any(), // gunakan file uploader atau biarkan kosong untuk update
+  image: z.any(),
   company_type_id: z.coerce
     .number({ invalid_type_error: 'Company type is required' })
     .min(1, 'Company type is required'),
@@ -48,6 +49,8 @@ export default function CompanyForm({
   initialData,
   pageTitle,
 }: CompanyFormProps) {
+  const router = useRouter();
+
   const defaultValues: CompanyFormValues = {
     name: initialData?.name || '',
     image: initialData?.image
@@ -75,11 +78,8 @@ export default function CompanyForm({
 
   async function onSubmit(values: CompanyFormValues) {
     try {
-      console.log('TEST', values);
-      // Pastikan city_id selalu null
       values.city_id = null;
 
-      // Siapkan FormData untuk mendukung upload file
       const formData = new FormData();
       formData.append('name', values.name);
       if (values.image.length > 0) {
@@ -95,15 +95,13 @@ export default function CompanyForm({
 
       let response;
       if (initialData?.id) {
-        console.log('update', formData);
         response = await updateCompany(initialData.id, formData);
       } else {
-        console.log('add');
         response = await createCompany(formData);
       }
       console.log('Response:', response);
       toast.success('Company saved successfully!');
-      // router.push('/admin/company');
+      router.push('/admin/company');
     } catch (error) {
       console.error('Error submitting form', error);
       toast.error('Error submitting company. Please try again.');
