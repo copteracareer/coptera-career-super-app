@@ -53,9 +53,7 @@ const jobFormSchema = z.object({
   due_date: z.string().min(10, 'Due date is required'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   link: z.string().nullable().optional(),
-  facilities: z.coerce
-    .number({ invalid_type_error: 'Country is required' })
-    .min(1, 'Country is required'),
+  facilities: z.union([z.number(), z.array(z.number())]),
   country_id: z.coerce
     .number({ invalid_type_error: 'Country is required' })
     .min(1, 'Country is required'),

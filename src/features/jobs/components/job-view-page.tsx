@@ -24,8 +24,8 @@ function mapJobToFormValues(job: JobVacancy): JobVacancyFormValues {
     description: job.description,
     link: job.link || '',
     facilities: job.jobVacancyFacilities
-      ? job.jobVacancyFacilities.map((facility) => facility.jobFacility.id)
-      : [],
+      ? job.jobVacancyFacilities.map((f) => f.id)
+      : 0,
     country_id: 0,
     minimum: 0,
     maximum: 0,
