@@ -80,6 +80,10 @@ export function getCompanyTypes() {
   return getOptions('company-type');
 }
 
+export function getCity() {
+  return getOptions('city');
+}
+
 // CREATE
 export function createJobExperiences(name: string) {
   return createOption('job-experience', { name });

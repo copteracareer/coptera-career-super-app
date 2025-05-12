@@ -9,6 +9,7 @@ export default async function JobListingPage({}: JobListingPage) {
   const vacancies: JobVacancy[] = await getJobVacancies();
   const totalVacancies = vacancies.length;
 
+  console.log('totalVacancies', vacancies);
   return (
     <JobVacancyTable
       columns={columns}

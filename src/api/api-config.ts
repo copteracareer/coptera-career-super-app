@@ -17,4 +17,8 @@ export const apiConfig = {
     getAll: optionApi.getCompanyTypes,
     create: optionApi.createCompanyTypes,
   },
+  'cities': {
+    getAll: optionApi.getCity,
+    create: optionApi.createCompanyTypes,
+  },
 };

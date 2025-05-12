@@ -21,7 +21,7 @@ type Option = { label: string; value: string | number };
 
 type ComboBoxProps = {
   type: keyof typeof apiConfig; // "company", dll.
-  value?: string | number | (string | number)[];
+  value?: string | number | (string | number)[] | null;
   onChange: (value: string | number | (string | number)[]) => void;
   placeholder?: string;
   disabled?: boolean;

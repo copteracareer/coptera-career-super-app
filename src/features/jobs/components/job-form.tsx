@@ -23,9 +23,8 @@ import {
 } from '@/components/ui/select';
 import RichTextEditor from '@/components/ui/rich-text-editor';
 import { useQuery } from '@tanstack/react-query';
-import { getJobExperiences, getJobTypes, getCompanies } from '@/api/options';
+import { getJobExperiences, getJobTypes, getCompanies} from '@/api/options';
 import { createJobVacancy, updateJobVacancy } from '@/api/job-vacancy-api';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { formatCurrency } from '@/lib/utils';
 import ComboBox from '@/components/ui/combobox';
@@ -79,7 +78,7 @@ type JobFormProps = {
 export default function JobForm({ initialData, pageTitle }: JobFormProps) {
   const defaultValues: JobVacancyFormValues = {
     company_id: initialData?.company_id || 0,
-    city_id: null,
+    city_id: initialData?.city_id || 0,
     job_experience_id: initialData?.job_experience_id || 0,
     job_classification_id: initialData?.job_classification_id || 0,
     job_type_id: initialData?.job_type_id || 0,
@@ -116,7 +115,6 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
     queryFn: getJobTypes,
   });
 
-  const router = useRouter();
   async function onSubmit(values: JobVacancyFormValues) {
     const facilitiesArray = Array.isArray(values.facilities)
       ? values.facilities
@@ -136,7 +134,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
       }
       console.log('Response:', response);
       toast.success('Job saved successfully!');
-      router.push('/admin/job');
+      // router.push('/admin/job');
     } catch (error) {
       console.error('Error submitting form', error);
       toast.error('Error submitting job. Please try again.');
@@ -195,6 +193,24 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                         ))}
                       </SelectContent>
                     </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="city_id"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>City</FormLabel>
+                    <FormControl>
+                      <ComboBox
+                        type="cities"
+                        value={field.value}
+                        onChange={field.onChange}
+                        multiple={true}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

@@ -45,6 +45,7 @@ export type JobVacancy = {
   city: City;
   jobVacancyFacilities: JobVacancyFacility[];
   jobVacancySalary: unknown;
+  jobType: unknown;
 };
 
 export type JobVacancyResponse = {

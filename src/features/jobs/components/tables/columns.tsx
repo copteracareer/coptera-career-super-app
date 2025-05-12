@@ -39,6 +39,10 @@ export const columns: ColumnDef<JobVacancy>[] = [
   {
     accessorKey: 'work_type',
     header: 'Work Type',
+    cell: ({ row }) => {
+      const jobType = row.original.jobType;
+      return jobType && typeof jobType === 'object' && 'name' in jobType ? jobType.name : '-';
+    },
   },
   // {
   //   accessorKey: 'due_date',
