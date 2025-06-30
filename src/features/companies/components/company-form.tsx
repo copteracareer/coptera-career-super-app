@@ -32,6 +32,7 @@ const companyFormSchema = z.object({
   brand: z.string().min(1, 'Brand is required'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   address: z.string().min(5, 'Address is required'),
+  email: z.string().email('Invalid email address'),
   web: z.string().url('Invalid website URL'),
   company_size: z.string().min(1, 'Company size is required'),
 });
@@ -66,6 +67,7 @@ export default function CompanyForm({
     brand: initialData?.brand || '',
     description: initialData?.description || '',
     address: initialData?.address || '',
+    email: initialData?.email || '',
     web: initialData?.web || '',
     company_size: initialData?.company_size || '',
     id: initialData?.id,
@@ -89,6 +91,7 @@ export default function CompanyForm({
       formData.append('brand', values.brand);
       formData.append('description', values.description);
       formData.append('address', values.address);
+      formData.append('email', values.email);
       formData.append('web', values.web);
       formData.append('company_size', values.company_size);
       formData.append('city_id', `${1}`);
@@ -186,7 +189,23 @@ export default function CompanyForm({
               />
             </div>
 
-            {/* Group 5: Description */}
+            {/* Group 5: Email */}
+            <div>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            {/* Group 6: Description */}
             <div>
               <FormField
                 control={form.control}

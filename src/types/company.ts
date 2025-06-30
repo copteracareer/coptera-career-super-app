@@ -5,6 +5,7 @@ export type Company = {
   brand: string;
   description: string;
   address: string;
+  email?: string;
   image: string;
   web: string;
   company_size: string;

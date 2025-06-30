@@ -18,6 +18,7 @@ function mapCompanyToFormValues(company: Company): CompanyFormValues {
     brand: company.brand,
     description: company.description,
     address: company.address,
+    email: company.email,
     web: company.web,
     company_size: company.company_size,
   };
