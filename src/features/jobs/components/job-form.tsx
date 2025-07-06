@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/select';
 import RichTextEditor from '@/components/ui/rich-text-editor';
 import { useQuery } from '@tanstack/react-query';
-import { getJobExperiences, getJobTypes, getCompanies} from '@/api/options';
+import { getJobExperiences, getJobTypes, getCompanies } from '@/api/options';
 import { createJobVacancy, updateJobVacancy } from '@/api/job-vacancy-api';
 import { toast } from 'sonner';
 import { formatCurrency } from '@/lib/utils';
@@ -132,11 +132,9 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
       } else {
         response = await createJobVacancy(dataJob);
       }
-      console.log('Response:', response);
       toast.success('Job saved successfully!');
-      // router.push('/admin/job');
+      router.push('/admin/job');
     } catch (error) {
-      console.error('Error submitting form', error);
       toast.error('Error submitting job. Please try again.');
     }
   }

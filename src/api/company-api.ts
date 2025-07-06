@@ -47,12 +47,17 @@ export async function createCompany(
 
   if (payload instanceof FormData) {
     body = payload;
+    (payload as FormData).set('telephone', '000000');
   } else {
-    body = JSON.stringify(payload);
+    console.log('test2');
+    body = JSON.stringify({
+      ...payload,
+      telephone: '000000',
+    });
     headers['Content-Type'] = 'application/json';
   }
 
-  const res = await fetch(API_URL_v2, {
+  const res = await fetch(API_URL, {
     method: 'POST',
     headers,
     body,
@@ -66,12 +71,11 @@ export async function createCompany(
 
 export async function updateCompany(
   id: number,
-  payload: FormData | unknown,
+  payload: FormData,
 ): Promise<unknown> {
   const res = await fetch(`${API_URL}/${id}`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
+    body: payload,
   });
   if (!res.ok) {
     throw new Error('Failed to update company');

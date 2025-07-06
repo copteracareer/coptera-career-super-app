@@ -102,11 +102,9 @@ export default function CompanyForm({
       } else {
         response = await createCompany(formData);
       }
-      console.log('Response:', response);
       toast.success('Company saved successfully!');
       router.push('/admin/company');
     } catch (error) {
-      console.error('Error submitting form', error);
       toast.error('Error submitting company. Please try again.');
     }
   }

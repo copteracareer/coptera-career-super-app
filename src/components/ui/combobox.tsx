@@ -20,7 +20,7 @@ import { apiConfig } from '@/api/api-config';
 type Option = { label: string; value: string | number };
 
 type ComboBoxProps = {
-  type: keyof typeof apiConfig; // "company", dll.
+  type: keyof typeof apiConfig;
   value?: string | number | (string | number)[] | null;
   onChange: (value: string | number | (string | number)[]) => void;
   placeholder?: string;
