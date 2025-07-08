@@ -47,7 +47,6 @@ export async function createCompany(
 
   if (payload instanceof FormData) {
     body = payload;
-    (payload as FormData).set('telephone', '000000');
   } else {
     console.log('test2');
     body = JSON.stringify({
