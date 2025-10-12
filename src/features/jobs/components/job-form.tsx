@@ -28,6 +28,7 @@ import { createJobVacancy, updateJobVacancy } from '@/api/job-vacancy-api';
 import { toast } from 'sonner';
 import { formatCurrency } from '@/lib/utils';
 import ComboBox from '@/components/ui/combobox';
+import { useRouter } from 'next/navigation';
 
 // Schema validasi menggunakan zod
 const jobFormSchema = z.object({
@@ -47,7 +48,7 @@ const jobFormSchema = z.object({
   education_level_id: z.coerce
     .number({ invalid_type_error: 'Education level is required' })
     .min(1, 'Education level is required'),
-  work_type: z.enum(['hybrid', 'remote', 'onsite']),
+  work_type: z.enum(['hybrid', 'remote', 'onsite']).nullable(),
   title: z.string().min(2, 'Title must be at least 2 characters'),
   due_date: z.string().min(10, 'Due date is required'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
@@ -76,6 +77,8 @@ type JobFormProps = {
 };
 
 export default function JobForm({ initialData, pageTitle }: JobFormProps) {
+  const router = useRouter();
+
   const defaultValues: JobVacancyFormValues = {
     company_id: initialData?.company_id || 0,
     city_id: initialData?.city_id || 0,
@@ -83,7 +86,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
     job_classification_id: initialData?.job_classification_id || 0,
     job_type_id: initialData?.job_type_id || 0,
     education_level_id: initialData?.education_level_id || 0,
-    work_type: initialData?.work_type || 'hybrid',
+    work_type: initialData?.work_type || null,
     title: initialData?.title || '',
     due_date: initialData?.due_date || '',
     description: initialData?.description || '',

@@ -35,7 +35,7 @@ export type JobVacancyFacility = {
 
 export type JobVacancy = {
   id: number;
-  work_type: string;
+  work_type: string | null;
   title: string;
   due_date: string | null;
   description: string;

@@ -5,7 +5,7 @@ import React, { Suspense } from 'react';
 import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
-import { Separator } from '@radix-ui/react-separator';
+import { Separator } from '@/components/ui/separator';
 import JobTableAction from '@/features/jobs/components/tables/job-table-action';
 import { searchParamsCache, serialize } from '@/lib/searchparams';
 import { SearchParams } from 'nuqs/server';

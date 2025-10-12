@@ -18,7 +18,7 @@ function mapJobToFormValues(job: JobVacancy): JobVacancyFormValues {
     job_classification_id: 0,
     job_type_id: 0,
     education_level_id: 0,
-    work_type: job.work_type as 'hybrid' | 'remote' | 'onsite',
+    work_type: job.work_type as 'hybrid' | 'remote' | 'onsite' | null,
     title: job.title,
     due_date: job.due_date || '',
     description: job.description,
