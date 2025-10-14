@@ -22,7 +22,8 @@ function mapJobToFormValues(job: JobVacancy): JobVacancyFormValues {
     title: job.title,
     due_date: job.due_date || '',
     description: job.description,
-    link: job.link || '',
+    is_send_email: job.is_send_email,
+    link: job.link || null,
     facilities: job.jobVacancyFacilities
       ? job.jobVacancyFacilities.map((f) => f.id)
       : 0,

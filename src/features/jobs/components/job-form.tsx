@@ -29,6 +29,7 @@ import { toast } from 'sonner';
 import { formatCurrency } from '@/lib/utils';
 import ComboBox from '@/components/ui/combobox';
 import { useRouter } from 'next/navigation';
+import { Checkbox } from '@/components/ui/checkbox';
 
 // Schema validasi menggunakan zod
 const jobFormSchema = z.object({
@@ -52,6 +53,7 @@ const jobFormSchema = z.object({
   title: z.string().min(2, 'Title must be at least 2 characters'),
   due_date: z.string().min(10, 'Due date is required'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
+  is_send_email: z.boolean().optional(),
   link: z.string().nullable().optional(),
   facilities: z.union([z.number(), z.array(z.number())]),
   country_id: z.coerce
@@ -90,7 +92,8 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
     title: initialData?.title || '',
     due_date: initialData?.due_date || '',
     description: initialData?.description || '',
-    link: initialData?.link || '',
+    is_send_email: initialData?.is_send_email,
+    link: initialData?.link || null,
     facilities: initialData?.facilities || 0,
     country_id: 1,
     minimum: initialData?.minimum || 0,
@@ -354,6 +357,25 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                     <FormLabel>Due Date</FormLabel>
                     <FormControl>
                       <Input type="date" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="is_send_email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Send Email</FormLabel>
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={(checked) => {
+                          field.onChange(checked);
+                        }}
+                        className="my-auto ml-2"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
