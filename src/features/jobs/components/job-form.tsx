@@ -120,6 +120,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
     queryKey: ['jobTypes'],
     queryFn: getJobTypes,
   });
+  const workTypes = ['onsite', 'remote', 'hybrid'];
 
   async function onSubmit(values: JobVacancyFormValues) {
     const facilitiesArray = Array.isArray(values.facilities)
@@ -345,6 +346,34 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={form.control}
+                name="work_type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Work Type</FormLabel>
+                    <Select
+                      onValueChange={(value) => field.onChange(value)}
+                      value={!field.value ? '' : String(field.value)}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Work Type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {workTypes.map((wt, index) => (
+                          <SelectItem key={index} value={String(wt)}>
+                            {wt.charAt(0).toUpperCase() + wt.slice(1)}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
             {/* Group 5: Due Date & Link */}
@@ -366,7 +395,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                 control={form.control}
                 name="is_send_email"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="flex items-center">
                     <FormLabel>Send Email</FormLabel>
                     <FormControl>
                       <Checkbox
@@ -374,7 +403,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                         onCheckedChange={(checked) => {
                           field.onChange(checked);
                         }}
-                        className="my-auto ml-2"
+                        className="ml-2"
                       />
                     </FormControl>
                     <FormMessage />
