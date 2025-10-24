@@ -30,6 +30,7 @@ import { formatCurrency } from '@/lib/utils';
 import ComboBox from '@/components/ui/combobox';
 import { useRouter } from 'next/navigation';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useState } from 'react';
 
 // Schema validasi menggunakan zod
 const jobFormSchema = z.object({
@@ -102,6 +103,8 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
     id: initialData?.id,
   };
 
+  const [id, setId] = useState(initialData?.id);
+
   const form = useForm<JobVacancyFormValues>({
     resolver: zodResolver(jobFormSchema),
     defaultValues,
@@ -134,8 +137,9 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
 
     try {
       let response;
-      if (values.id) {
-        response = await updateJobVacancy(values.id, dataJob);
+
+      if (id) {
+        response = await updateJobVacancy(id, dataJob);
       } else {
         response = await createJobVacancy(dataJob);
       }
