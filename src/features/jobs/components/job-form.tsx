@@ -55,7 +55,7 @@ const jobFormSchema = z.object({
   description: z.string().min(10, 'Description must be at least 10 characters'),
   is_send_email: z.boolean().optional(),
   link: z.string().nullable().optional(),
-  facilities: z.union([z.number(), z.array(z.number())]),
+  facilities: z.union([z.number(), z.array(z.number())]).nullable(),
   country_id: z.coerce
     .number({ invalid_type_error: 'Country is required' })
     .min(1, 'Country is required'),
@@ -94,7 +94,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
     description: initialData?.description || '',
     is_send_email: initialData?.is_send_email,
     link: initialData?.link || null,
-    facilities: initialData?.facilities || 0,
+    facilities: initialData?.facilities || [],
     country_id: 1,
     minimum: initialData?.minimum || 0,
     maximum: initialData?.maximum || 0,
@@ -141,8 +141,12 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
       }
       toast.success('Job saved successfully!');
       router.push('/admin/job');
-    } catch (error) {
-      toast.error('Error submitting job. Please try again.');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('Error submitting job. Please try again.');
+      }
     }
   }
 
@@ -229,7 +233,7 @@ export default function JobForm({ initialData, pageTitle }: JobFormProps) {
                     <FormControl>
                       <ComboBox
                         type="facilities"
-                        value={field.value}
+                        value={field.value || null}
                         onChange={field.onChange}
                         multiple={true}
                       />
