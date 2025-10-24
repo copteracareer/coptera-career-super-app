@@ -33,6 +33,27 @@ export type JobVacancyFacility = {
   jobFacility: JobFacility;
 };
 
+export type JobType = {
+  id: number;
+  name: string;
+};
+
+export type JobExperience = {
+  id: number;
+  name: string;
+  description: string;
+};
+
+export type JobClassification = {
+  id: number;
+  name: string;
+};
+
+export type EducationLevel = {
+  id: number;
+  name: string;
+};
+
 export type JobVacancy = {
   id: number;
   work_type: string | null;
@@ -46,7 +67,10 @@ export type JobVacancy = {
   city: City;
   jobVacancyFacilities: JobVacancyFacility[];
   jobVacancySalary: unknown;
-  jobType: unknown;
+  jobType: JobType;
+  jobExperience: JobExperience;
+  jobClassification: JobClassification;
+  educationLevel: EducationLevel;
 };
 
 export type JobVacancyResponse = {
